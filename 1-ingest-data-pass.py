@@ -1,51 +1,46 @@
 #!/usr/bin/env python3
 from bz2 import decompress
-from bz2 import open as bz2open
 from multiprocessing import Pool
-from os.path import getsize, join
-from sqlite3 import connect
 from xml.etree import ElementTree
 
-ASSETS_DIRECTORY_PATH = "assets"
-
-PAGES_DATABASE_FILEPATH = join(
-    ASSETS_DIRECTORY_PATH, "enwiki-20220501-pages-articles-multistream.pages.db"
-)
-
-WIKIPEDIA_DUMP_FILEPATH = join(
-    ASSETS_DIRECTORY_PATH, "enwiki-20220501-pages-articles-multistream.xml.bz2"
-)
-
-WIKIPEDIA_INDEX_FILEPATH = join(
-    ASSETS_DIRECTORY_PATH, "enwiki-20220501-pages-articles-multistream-index.txt.bz2"
+from jeopardy_data_scraping import (
+    PAGES_DATABASE_FILEPATH,
+    SQLITE_PAGE_SIZE_BYTES,
+    VITAL_ARTICLES_TITLE_PREFIX,
+    WIKIPEDIA_DUMP_FILEPATH,
+    WIKIPEDIA_INDEX_FILEPATH,
+    MediaWikiContentModel,
+    MediaWikiNamespace,
+    flush_batch_to_database,
+    initialize_bulk_write_database,
+    load_multistream_byte_ranges,
 )
 
 # Buffered rows committed to SQLite per transaction.
 DATABASE_TRANSACTION_BATCH_SIZE = 10000
 
-# SQLite cache limit, negative values set KiB (-2000000 ≈ 2 GiB).
-SQLITE_CACHE_SIZE_KIBIBYTES = -2000000
-
-# SQLite page size in bytes (65536 = 64 KiB, reduces overflow chaining for large text).
-SQLITE_PAGE_SIZE_BYTES = 65536
-
 # 100-page compressed blocks dispatched per worker at once.
 WORKER_CHUNK_SIZE = 8
 
-# MediaWiki namespace ID for encyclopedia articles (ex. Main / Article).
-WIKIPEDIA_MAIN_NAMESPACE = "0"
-
-# MediaWiki namespace ID for project pages and meta lists (ex. Wikipedia:).
-WIKIPEDIA_PROJECT_NAMESPACE = "4"
+# String namespace representations for XML tag comparison.
+MAIN_NAMESPACE_TEXT = str(MediaWikiNamespace.MAIN)
+PROJECT_NAMESPACE_TEXT = str(MediaWikiNamespace.PROJECT)
 
 # Namespaces checked before inspecting full XML page elements.
-ALLOWED_NAMESPACES = {WIKIPEDIA_MAIN_NAMESPACE, WIKIPEDIA_PROJECT_NAMESPACE}
+ALLOWED_NAMESPACES = {MAIN_NAMESPACE_TEXT, PROJECT_NAMESPACE_TEXT}
 
-# Required revision content model for Wikitext pages.
-WIKITEXT_CONTENT_MODEL = "wikitext"
+# SQLite table schema for ingested Wikipedia pages.
+PAGES_TABLE_SCHEMA_SQL = """
+    CREATE TABLE IF NOT EXISTS pages (
+        id INTEGER PRIMARY KEY,
+        namespace INTEGER,
+        title TEXT,
+        content TEXT
+    );
+"""
 
-# Title prefix identifying Vital Articles index and sub-list pages.
-VITAL_ARTICLES_TITLE_PREFIX = "Wikipedia:Vital articles/"
+# SQLite statement for inserting buffered page records.
+INSERT_PAGE_SQL = "INSERT OR IGNORE INTO pages VALUES (?, ?, ?, ?)"
 
 # Persistent dump file handle opened once per worker process.
 WORKER_DUMP_FILE = None
@@ -58,76 +53,12 @@ def initialize_worker():
     WORKER_DUMP_FILE = open(WIKIPEDIA_DUMP_FILEPATH, "rb")
 
 
-def initialize_page_database():
-    """Initializes the pages table and sets pragmas for fast bulk writes."""
-    database_connection = connect(PAGES_DATABASE_FILEPATH)
-
-    database_connection.executescript(f"""
-        -- Use 64 KiB pages to prevent large text rows from spanning overflow pages.
-        PRAGMA page_size = {SQLITE_PAGE_SIZE_BYTES};
-
-        -- Disable disk sync on commit to maximize write speed.
-        PRAGMA synchronous = OFF;
-
-        -- Disable rollback journaling for one-way bulk loading.
-        PRAGMA journal_mode = OFF;
-
-        -- Hold an exclusive lock to avoid acquiring/releasing OS file locks per commit.
-        PRAGMA locking_mode = EXCLUSIVE;
-
-        -- Store temp tables, indexes, and sort structures in RAM instead of disk.
-        PRAGMA temp_store = MEMORY;
-
-        -- Allocate RAM cache to hold database pages during processing.
-        PRAGMA cache_size = {SQLITE_CACHE_SIZE_KIBIBYTES};
-
-        CREATE TABLE IF NOT EXISTS pages (
-            id INTEGER PRIMARY KEY,
-            namespace INTEGER,
-            title TEXT,
-            content TEXT
-        );
-    """)
-
-    return database_connection
-
-
-def flush_batch_to_database(database_connection, page_batch):
-    """Writes buffered page records to SQLite in one transaction."""
-    database_connection.executemany(
-        "INSERT OR IGNORE INTO pages VALUES (?, ?, ?, ?)", page_batch
-    )
-
-    database_connection.commit()
-    page_batch.clear()
-
-
-def load_multistream_byte_ranges(index_filepath, dump_filepath):
-    """Reads index into memory and yields (start_offset, block_size) tuples."""
-    byte_ranges = []
-    previous_offset = None
-
-    with bz2open(
-        index_filepath, mode="rt", encoding="utf-8", errors="replace"
-    ) as index_stream:
-        for line in index_stream:
-            current_offset = int(line.partition(":")[0])
-            if previous_offset is not None and current_offset != previous_offset:
-                byte_ranges.append((previous_offset, current_offset - previous_offset))
-            previous_offset = current_offset
-
-    if previous_offset is not None:
-        byte_ranges.append((previous_offset, getsize(dump_filepath) - previous_offset))
-
-    return byte_ranges
-
-
 def is_valid_main_article(namespace, title, has_redirect, model):
     """Returns True if a page is a non-redirect Wikitext article in the main namespace."""
     return (
-        namespace == WIKIPEDIA_MAIN_NAMESPACE
+        namespace == MAIN_NAMESPACE_TEXT
         and not has_redirect
-        and model == WIKITEXT_CONTENT_MODEL
+        and model == MediaWikiContentModel.WIKITEXT
         and bool(title)
     )
 
@@ -135,9 +66,9 @@ def is_valid_main_article(namespace, title, has_redirect, model):
 def is_valid_vital_article(namespace, title, has_redirect, model):
     """Returns True if a page is a non-redirect Vital Articles list in the project namespace."""
     return (
-        namespace == WIKIPEDIA_PROJECT_NAMESPACE
+        namespace == PROJECT_NAMESPACE_TEXT
         and not has_redirect
-        and model == WIKITEXT_CONTENT_MODEL
+        and model == MediaWikiContentModel.WIKITEXT
         and title.startswith(VITAL_ARTICLES_TITLE_PREFIX)
     )
 
@@ -203,7 +134,11 @@ def process_compressed_xml_block(byte_range):
 
 def execute_ingestion_pipeline():
     """Coordinates parallel block processing and sequential SQLite batch writes."""
-    database_connection = initialize_page_database()
+    database_connection = initialize_bulk_write_database(
+        PAGES_DATABASE_FILEPATH,
+        PAGES_TABLE_SCHEMA_SQL,
+        page_size=SQLITE_PAGE_SIZE_BYTES,
+    )
 
     page_batch = []
     total_persisted_pages = 0
@@ -225,13 +160,16 @@ def execute_ingestion_pipeline():
             if len(page_batch) >= DATABASE_TRANSACTION_BATCH_SIZE:
                 total_persisted_pages += len(page_batch)
 
-                flush_batch_to_database(database_connection, page_batch)
+                flush_batch_to_database(
+                    database_connection, INSERT_PAGE_SQL, page_batch
+                )
+
                 print(f"Persisted {total_persisted_pages:,} pages...")
 
     if page_batch:
         total_persisted_pages += len(page_batch)
 
-        flush_batch_to_database(database_connection, page_batch)
+        flush_batch_to_database(database_connection, INSERT_PAGE_SQL, page_batch)
 
     print("Building index on pages...")
 
