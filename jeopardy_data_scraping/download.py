@@ -19,7 +19,13 @@ def download_asset(*file_targets):
         filename = url.rsplit("/", 1)[-1]
         filepath = ASSETS_DIRECTORY_PATH / filename
 
-        if not file_matches_hash(filepath, expected_hash):
+        print(f"Checking existing {filepath.name}...")
+
+        if file_matches_hash(filepath, expected_hash):
+            print(f"Passed check: {filepath.name}")
+
+        else:
+            print(f"Failed check: {filepath.name}")
             resolved_url = resolve_url(url)
 
             downloader.enqueue_file(
@@ -32,7 +38,13 @@ def download_asset(*file_targets):
         downloader.download()
 
         for filepath, expected_hash in pending_verification:
-            if not file_matches_hash(filepath, expected_hash):
+            print(f"Checking downloaded {filepath.name}...")
+
+            if file_matches_hash(filepath, expected_hash):
+                print(f"Passed check: {filepath.name}")
+
+            else:
+                print(f"Failed check: {filepath.name}")
                 filepath.unlink(missing_ok=True)
 
                 raise RuntimeError(
