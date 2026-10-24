@@ -1,0 +1,11 @@
+[project]
+name = "jeopardy-data-scraping"
+version = "0.0.1"
+dependencies = ["blake3~=1.0.11", "mwparserfromhell~=0.7.2", "parfive~=2.3.1"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+exclude = ["*.md"]
