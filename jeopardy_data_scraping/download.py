@@ -1,3 +1,4 @@
+from mmap import ACCESS_READ, mmap
 from urllib.request import Request, urlopen
 
 from blake3 import blake3
@@ -47,8 +48,8 @@ def file_matches_hash(filepath, expected_hash):
     file_hasher = blake3()
 
     with filepath.open("rb") as file:
-        while chunk := file.read(HASH_READ_CHUNK_SIZE):
-            file_hasher.update(chunk)
+        with mmap(file.fileno(), 0, access=ACCESS_READ) as mm:
+            file_hasher.update(mm)
 
     return file_hasher.hexdigest().lower() == expected_hash.lower()
 
