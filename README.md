@@ -34,7 +34,7 @@ The following steps must be run in order.
 
 ### 1. Ingest Data Pass
 
-> **WARNING:** This step will probably max out all of your CPU cores / system RAM / swap and lock up your computer.
+> **WARNING:** This step will probably max out all of your CPU cores / system RAM / swap / disk access and lock up your computer.
 >
 > Yeah... this needs some better optimization / backpressure handling.
 
@@ -46,13 +46,19 @@ Convert the downloaded Wikipedia dump assets to an SQLite3 dataset asset via the
 
 ### 2. Build Categories Pass
 
-...
+> **WARNING:** This step will probably max out your disk access and lock up your computer.
+
+Extract page categories and create one-to-many bindings between pages and categories.
+
+```
+> python3 ./2-build-categories-pass.py
+```
 
 ### 3. Build Vital Articles Pass
 
 ...
 
-### 4. Filter Pass
+### 4. Filter Pages Pass
 
 ...
 
