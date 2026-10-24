@@ -8,8 +8,8 @@ from xml.etree import ElementTree
 
 ASSETS_DIRECTORY_PATH = "assets"
 
-SQLITE_DATABASE_FILEPATH = join(
-    ASSETS_DIRECTORY_PATH, "enwiki-20220501-pages-articles-multistream.db"
+PAGES_DATABASE_FILEPATH = join(
+    ASSETS_DIRECTORY_PATH, "enwiki-20220501-pages-articles-multistream.pages.db"
 )
 
 WIKIPEDIA_DUMP_FILEPATH = join(
@@ -60,7 +60,7 @@ def initialize_worker():
 
 def initialize_page_database():
     """Initializes the pages table and sets pragmas for fast bulk writes."""
-    database_connection = connect(SQLITE_DATABASE_FILEPATH)
+    database_connection = connect(PAGES_DATABASE_FILEPATH)
 
     database_connection.executescript(f"""
         -- Use 64 KiB pages to prevent large text rows from spanning overflow pages.
