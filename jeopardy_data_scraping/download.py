@@ -4,7 +4,7 @@ from urllib.request import Request, urlopen
 from blake3 import blake3
 from parfive import Downloader
 
-from .path import ASSETS_DIRECTORY_PATH
+from jeopardy_data_scraping.path import ASSETS_DIRECTORY_PATH
 
 
 def download_asset(*file_targets):
