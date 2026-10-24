@@ -9,6 +9,7 @@ from jeopardy_data_scraping.database import (
     load_page_id_ranges,
     open_readonly_database,
 )
+from jeopardy_data_scraping.download import download_asset
 from jeopardy_data_scraping.mediawiki import (
     VITAL_ARTICLES_TITLE_PREFIX,
     MediaWikiContentModel,
@@ -35,6 +36,7 @@ __all__ = [
     "VITAL_ARTICLES_TITLE_PREFIX",
     "WIKIPEDIA_DUMP_FILEPATH",
     "WIKIPEDIA_INDEX_FILEPATH",
+    "download_asset",
     "flush_batch_to_database",
     "initialize_bulk_write_database",
     "load_multistream_byte_ranges",
