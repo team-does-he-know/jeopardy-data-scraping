@@ -81,7 +81,44 @@ Any of the above data scraper passes can be skipped by using the precompiled SQL
 
 ### 1. Download Ingested Data Dataset
 
-...
+> **WARNING:** The ingested pages dataset is **LARGE**! See below:
+>
+> - `enwiki-20220501-pages-articles-multistream.pages.db` — ~61.5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_000` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_001` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_002` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_003` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_004` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_005` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_006` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_007` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_008` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_009` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_010` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_011` — ~5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_012` — ~1.5 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_000.zst` — ~1 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_001.zst` — ~1.1 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_002.zst` — ~1.1 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_003.zst` — ~1.1 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_004.zst` — ~1 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_005.zst` — ~1 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_006.zst` — ~1 GB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_007.zst` — ~994 MB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_008.zst` — ~974 MB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_009.zst` — ~968 MB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_010.zst` — ~938 MB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_011.zst` — ~931 MB
+> - `enwiki-20220501-pages-articles-multistream.pages.db.part_012.zst` — ~321 MB
+
+Download the ingested data artifacts, decompress them, assemble them into the final dataset, and cleanup the downloaded artifacts.
+
+```
+> python3 ./scripts/download-pages-db.py
+> ./scripts/decompress-pages-db.sh
+> ./scripts/assemble-pages-db.sh
+> ./scripts/cleanup-pages-db-artifacts.sh
+```
 
 ### 2. Download Categories Dataset
 
