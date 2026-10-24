@@ -28,7 +28,7 @@ A [May 2022 dump of Wikipedia from the Internet Archive](https://archive.org/det
 > python3 ./scripts/download-assets.py
 ```
 
-## Running Data Scraper
+## Running the Data Scraper
 
 The following steps must be run in order.
 
