@@ -6,6 +6,7 @@
 
 - pip
 - Python 3.9+
+- zstd CLI
 
 ## Getting Started
 
