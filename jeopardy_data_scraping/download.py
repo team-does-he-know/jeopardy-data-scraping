@@ -52,7 +52,7 @@ def download_asset(*file_targets):
 
 def file_matches_hash(filepath, expected_hash):
     """Returns True if the file exists and its BLAKE3 hash matches expected_hash."""
-    if not filepath.is_file():
+    if not filepath.is_file() or filepath.stat().st_size == 0:
         return False
 
     file_hasher = blake3(max_threads=blake3.AUTO)
