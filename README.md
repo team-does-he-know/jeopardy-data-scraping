@@ -12,7 +12,7 @@
 Install the Python dependencies via the terminal:
 
 ```
-> pip3 install .
+> pip3 install -e .
 ```
 
 ## Wikipedia Database Dump
