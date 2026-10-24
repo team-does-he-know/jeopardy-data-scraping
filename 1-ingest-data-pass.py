@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-from bz2 import decompress, open as bz2open
+from bz2 import decompress
+from bz2 import open as bz2open
 from multiprocessing import Pool
 from os.path import getsize, join
 from sqlite3 import connect
