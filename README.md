@@ -74,3 +74,34 @@ Extract page categories and create one-to-many bindings between pages and catego
 ### 6. Classification Pass
 
 ...
+
+## Download Generated SQLite3 Datasets
+
+...
+
+### 2. Download Categories Dataset
+
+> **WARNING:** The categories dataset is **LARGE**! See below:
+>
+> - `enwiki-20220501-pages-articles-multistream.categories.db` — ~1.7 GB
+> - `enwiki-20220501-pages-articles-multistream.categories.db.zst` — ~521 MB
+
+Downloads the categories artifact, decompresses it, and cleanups the downloaded artifact.
+
+```
+> python3 ./scripts/download-categories-db.py
+> ./scripts/decompress-categories-db.sh
+> ./scripts/cleanup-categories-db-artifacts.sh
+```
+
+### 3. Download Vital Articles Dataset
+
+...
+
+### 4. Download Filtered Dataset
+
+...
+
+### 5. Download Factoids Dataset
+
+...
