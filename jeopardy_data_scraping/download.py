@@ -1,3 +1,5 @@
+from urllib.request import Request, urlopen
+
 from blake3 import blake3
 from parfive import Downloader
 
@@ -17,7 +19,12 @@ def download_asset(*file_targets):
         filepath = ASSETS_DIRECTORY_PATH / filename
 
         if not file_matches_hash(filepath, expected_hash):
-            downloader.enqueue_file(url, path=ASSETS_DIRECTORY_PATH)
+            resolved_url = resolve_url(url)
+
+            downloader.enqueue_file(
+                resolved_url, path=ASSETS_DIRECTORY_PATH, filename=filename
+            )
+
             pending_verification.append((filepath, expected_hash))
 
     if pending_verification:
@@ -44,3 +51,19 @@ def file_matches_hash(filepath, expected_hash):
             file_hasher.update(chunk)
 
     return file_hasher.hexdigest().lower() == expected_hash.lower()
+
+
+def resolve_url(url):
+    """Returns the resolved URL based on the server's response."""
+    request = Request(
+        url,
+        headers={"User-Agent": "Mozilla/5.0"},
+        method="HEAD",
+    )
+
+    try:
+        with urlopen(request) as response:
+            return response.url
+
+    except Exception:
+        return url
