@@ -6,8 +6,6 @@ from parfive import Downloader
 
 from .path import ASSETS_DIRECTORY_PATH
 
-HASH_READ_CHUNK_SIZE = 1024 * 1024  # 1 MiB
-
 
 def download_asset(*file_targets):
     """Downloads (url, blake3_hash) tuples into the assets directory if missing or corrupt."""
