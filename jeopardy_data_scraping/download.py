@@ -45,7 +45,7 @@ def file_matches_hash(filepath, expected_hash):
     if not filepath.is_file():
         return False
 
-    file_hasher = blake3()
+    file_hasher = blake3(max_threads=blake3.AUTO)
 
     with filepath.open("rb") as file:
         with mmap(file.fileno(), 0, access=ACCESS_READ) as mm:
