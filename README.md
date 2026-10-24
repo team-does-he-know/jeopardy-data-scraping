@@ -90,7 +90,7 @@ Any of the above data scraper passes can be skipped by using the precompiled SQL
 > - `enwiki-20220501-pages-articles-multistream.categories.db` — ~1.7 GB
 > - `enwiki-20220501-pages-articles-multistream.categories.db.zst` — ~521 MB
 
-Downloads the categories artifact, decompresses it, and cleanups the downloaded artifact.
+Download the categories artifact, decompress it, and cleanup the downloaded artifact.
 
 ```
 > python3 ./scripts/download-categories-db.py
