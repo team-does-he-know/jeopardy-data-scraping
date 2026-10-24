@@ -77,6 +77,10 @@ Extract page categories and create one-to-many bindings between pages and catego
 
 ## Download Generated SQLite3 Datasets
 
+Any of the above data scraper passes can be skipped by using the precompiled SQLite3 datasets.
+
+### 1. Download Ingested Data Dataset
+
 ...
 
 ### 2. Download Categories Dataset
