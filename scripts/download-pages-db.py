@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+from jeopardy_data_scraping import download_asset
+
+download_asset(
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_000.zst",
+        "042314f78f7bbda43c0e9f286488eb5f99bb2cc4dfd1695234becf443ea084ba",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_001.zst",
+        "a109496a516e9719ee5f09d5aabe0f3f8e0c8663a5342b92d2aa91f83646ea97",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_002.zst",
+        "1d2ff3c64757f4635c1ce359407f10bb415b5df577441a0e542704f6761d0b26",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_003.zst",
+        "48126fa5d3ec45079a1ed50e4bd227b564e9a072394e71ac14920d0457158eab",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_004.zst",
+        "4f3767f348fe0dc97926079eba49984b27e8fe79d2c37c73369b0bfa7be1584d",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_005.zst",
+        "2db5d45aa92e2bf482c9106cb281b896cd3b265dc0566a8d9f081d0062ad9ce9",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_006.zst",
+        "ed3e4721538197298f1b55bc70187b44cc0b91270cf4a68fe0ee709718d8e5e2",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_007.zst",
+        "8b931554424a7ffdc9109e493458717dc341bf373c45bda17ff77535e4d36613",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_008.zst",
+        "3adfee543fda2b7fb602980a261f8238aa361029f31d0efc57434ba95760fb48",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_009.zst",
+        "504c0330673b0dadded5d2de9ec8edfdf389e7b2008bf37643bda4637225d411",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_010.zst",
+        "a32b718040748e4ed0fb6474318a7a622746f8c2d61c62bf38400804170b0137",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_011.zst",
+        "987ebfe5bb93914353dcf874184a3d0cbc3c50b9ab5718b5c0264d9364ad3bd2",
+    ),
+    (
+        "https://github.com/team-does-he-know/jeopardy-data-scraping/releases/download/pages-db-20220501-zst/enwiki-20220501-pages-articles-multistream.pages.db.part_012.zst",
+        "14de30333a6c5119ec92eb26f36cac67ff34b36f6a8cb848da7dd601575430a4",
+    ),
+)
