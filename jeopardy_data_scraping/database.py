@@ -1,6 +1,6 @@
 from bz2 import open as bz2open
 from os import cpu_count
-from os.path import getsize
+from pathlib import Path
 from sqlite3 import connect
 
 # SQLite cache limit, negative values set KiB (-2000000 ≈ 2 GiB).
@@ -68,13 +68,13 @@ def load_multistream_byte_ranges(index_filepath, dump_filepath):
     ) as index_stream:
         for line in index_stream:
             current_offset = int(line.partition(":")[0])
-
             if previous_offset is not None and current_offset != previous_offset:
                 byte_ranges.append((previous_offset, current_offset - previous_offset))
-
             previous_offset = current_offset
 
     if previous_offset is not None:
-        byte_ranges.append((previous_offset, getsize(dump_filepath) - previous_offset))
+        byte_ranges.append(
+            (previous_offset, Path(dump_filepath).stat().st_size - previous_offset)
+        )
 
     return byte_ranges
