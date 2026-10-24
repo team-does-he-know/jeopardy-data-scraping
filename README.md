@@ -1,6 +1,6 @@
 # jeopardy-data-scraping
 
-> Scrapes Wikipedia English article database and creates Jeopardy questions out of the data via LLMs and decision models.
+> Scrapes Wikipedia English article database and creates Jeopardy questions out of the data via LLMs.
 
 ## Prerequisites
 
