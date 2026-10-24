@@ -2,6 +2,9 @@ from pathlib import Path
 
 ASSETS_DIRECTORY_PATH = Path("assets")
 
+CATEGORIES_DATABASE_FILEPATH = (
+    ASSETS_DIRECTORY_PATH / "enwiki-20220501-pages-articles-multistream.categories.db"
+)
 
 PAGES_DATABASE_FILEPATH = (
     ASSETS_DIRECTORY_PATH / "enwiki-20220501-pages-articles-multistream.pages.db"

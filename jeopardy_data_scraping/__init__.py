@@ -6,6 +6,8 @@ from jeopardy_data_scraping.database import (
     flush_batch_to_database,
     initialize_bulk_write_database,
     load_multistream_byte_ranges,
+    load_page_id_ranges,
+    open_readonly_database,
 )
 from jeopardy_data_scraping.mediawiki import (
     VITAL_ARTICLES_TITLE_PREFIX,
@@ -14,6 +16,7 @@ from jeopardy_data_scraping.mediawiki import (
 )
 from jeopardy_data_scraping.path import (
     ASSETS_DIRECTORY_PATH,
+    CATEGORIES_DATABASE_FILEPATH,
     PAGES_DATABASE_FILEPATH,
     WIKIPEDIA_DUMP_FILEPATH,
     WIKIPEDIA_INDEX_FILEPATH,
@@ -21,6 +24,7 @@ from jeopardy_data_scraping.path import (
 
 __all__ = [
     "ASSETS_DIRECTORY_PATH",
+    "CATEGORIES_DATABASE_FILEPATH",
     "MediaWikiContentModel",
     "MediaWikiNamespace",
     "PAGES_DATABASE_FILEPATH",
@@ -34,4 +38,6 @@ __all__ = [
     "flush_batch_to_database",
     "initialize_bulk_write_database",
     "load_multistream_byte_ranges",
+    "load_page_id_ranges",
+    "open_readonly_database",
 ]

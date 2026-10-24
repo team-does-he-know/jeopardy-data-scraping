@@ -78,3 +78,28 @@ def load_multistream_byte_ranges(index_filepath, dump_filepath):
         )
 
     return byte_ranges
+
+
+def load_page_id_ranges(database_filepath, range_size):
+    """Queries min and max page IDs and returns (start_id, end_id) tuples."""
+    with open_readonly_database(database_filepath) as database_connection:
+        minimum_id, maximum_id = database_connection.execute(
+            "SELECT MIN(id), MAX(id) FROM pages"
+        ).fetchone()
+
+    if minimum_id is None or maximum_id is None:
+        return []
+
+    return [
+        (start_id, start_id + range_size)
+        for start_id in range(minimum_id, maximum_id + 1, range_size)
+    ]
+
+
+def open_readonly_database(database_filepath):
+    """Opens a read-only SQLite connection with memory-mapped I/O enabled."""
+    database_uri = f"file:{Path(database_filepath).resolve()}?mode=ro"
+    database_connection = connect(database_uri, uri=True)
+    database_connection.execute(f"PRAGMA mmap_size = {SQLITE_MMAP_SIZE_BYTES};")
+
+    return database_connection
