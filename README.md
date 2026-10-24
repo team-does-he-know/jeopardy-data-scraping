@@ -7,7 +7,11 @@
 - pip
 - Python 3.9+
 
-## Installation
+## Getting Started
+
+The following steps must be run in order.
+
+### 1. Dependency Installation
 
 Install the Python dependencies via the terminal:
 
@@ -15,7 +19,7 @@ Install the Python dependencies via the terminal:
 > pip3 install -e .
 ```
 
-## Wikipedia Database Dump
+### 2. Wikipedia Database Dump
 
 > **WARNING:** The database dumps are **LARGE**! See below:
 >
@@ -25,7 +29,7 @@ Install the Python dependencies via the terminal:
 A [May 2022 dump of Wikipedia from the Internet Archive](https://archive.org/details/enwiki-20220501) is used by this project for its initial data scraping. Download it via the terminal:
 
 ```
-> python3 ./scripts/download-assets.py
+> python3 ./scripts/download-wikipedia-database-dump.py
 ```
 
 ## Running the Data Scraper
