@@ -5,7 +5,7 @@
 ## Prerequisites
 
 - pip
-- Python 3.9+
+- Python 3.12+
 - zstd CLI
 
 ## Getting Started
