@@ -6,6 +6,10 @@ CATEGORIES_DATABASE_FILEPATH = (
     ASSETS_DIRECTORY_PATH / "enwiki-20220501-pages-articles-multistream.categories.db"
 )
 
+FACTOIDS_DATABASE_FILEPATH = (
+    ASSETS_DIRECTORY_PATH / "enwiki-20220501-pages-articles-multistream.factoids.db"
+)
+
 FILTERED_DATABASE_FILEPATH = (
     ASSETS_DIRECTORY_PATH / "enwiki-20220501-pages-articles-multistream.filtered.db"
 )
