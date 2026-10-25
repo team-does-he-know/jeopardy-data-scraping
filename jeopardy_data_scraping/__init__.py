@@ -16,6 +16,7 @@ from jeopardy_data_scraping.mediawiki import (
     MediaWikiNamespace,
     render_wikitext_to_plaintext,
 )
+from jeopardy_data_scraping.openai import request_chat_completion
 from jeopardy_data_scraping.path import (
     ASSETS_DIRECTORY_PATH,
     CATEGORIES_DATABASE_FILEPATH,
@@ -48,4 +49,5 @@ __all__ = [
     "load_page_id_ranges",
     "open_readonly_database",
     "render_wikitext_to_plaintext",
+    "request_chat_completion",
 ]
