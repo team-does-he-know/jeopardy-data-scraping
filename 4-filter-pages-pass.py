@@ -29,6 +29,8 @@ CATEGORY_WHITELIST = (
     "Video games scored by C418",
     "Video games scored by Darren Korb",
     "Video games scored by Kelly Bailey",
+    "Video games scored by Martin O'Donnell",
+    "Video games scored by Michael Salvatori",
     "Video games scored by Mike Morasky",
     # Vidya Game Franchises
     "Bayonetta",
@@ -37,6 +39,7 @@ CATEGORY_WHITELIST = (
     "Fallout (franchise) video games",
     "Half-Life (series) games",
     "Hades (series)",
+    "Halo (franchise) games",
     "Metal Gear video games",
     "Minecraft",
     "Persona (series)",
@@ -46,6 +49,7 @@ CATEGORY_WHITELIST = (
     # Vidya Game Developers
     "Atlus games",
     "Bethesda Game Studios games",
+    "Bungie games",
     "Konami games",
     "PlatinumGames games",
     "Re-Logic games",
@@ -98,6 +102,7 @@ CATEGORY_WHITELIST = (
     "Dystopian video games",
     "Existentialist video games",
     "Fantasy video games",
+    "Military science fiction video games",
     "Post-apocalyptic video games",
     "Retro-style video games",
     "Retrofuturistic video games",
