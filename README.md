@@ -65,7 +65,11 @@ Extract page categories and create one-to-many bindings between pages and catego
 
 ### 4. Filter Pages Pass
 
-...
+Filter the extracted datasets down to a smaller cleaned dataset ready for factoid creation.
+
+```
+> python3 ./4-filter-pages-pass.py
+```
 
 ### 5. Generate Factoids Pass
 
