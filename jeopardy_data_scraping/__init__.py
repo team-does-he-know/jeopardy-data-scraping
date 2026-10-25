@@ -19,6 +19,7 @@ from jeopardy_data_scraping.mediawiki import (
 from jeopardy_data_scraping.path import (
     ASSETS_DIRECTORY_PATH,
     CATEGORIES_DATABASE_FILEPATH,
+    FACTOIDS_DATABASE_FILEPATH,
     FILTERED_DATABASE_FILEPATH,
     PAGES_DATABASE_FILEPATH,
     WIKIPEDIA_DUMP_FILEPATH,
@@ -28,6 +29,7 @@ from jeopardy_data_scraping.path import (
 __all__ = [
     "ASSETS_DIRECTORY_PATH",
     "CATEGORIES_DATABASE_FILEPATH",
+    "FACTOIDS_DATABASE_FILEPATH",
     "FILTERED_DATABASE_FILEPATH",
     "MediaWikiContentModel",
     "MediaWikiNamespace",
