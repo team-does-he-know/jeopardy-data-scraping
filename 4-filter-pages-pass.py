@@ -56,6 +56,7 @@ CATEGORY_WHITELIST = (
     "PlatinumGames games",
     "Re-Logic games",
     "Rockstar Games games",
+    "Nintendo arcade games",
     "Nintendo Classics games",
     "Nintendo Entertainment Analysis & Development games",
     "Sega video games",
@@ -65,6 +66,7 @@ CATEGORY_WHITELIST = (
     "3D platformers",
     "Action-adventure games",
     "Action role-playing video games",
+    "Arcade video games",
     "Dungeon crawler video games",
     "First-person adventure games",
     "First-person shooters",
@@ -85,6 +87,7 @@ CATEGORY_WHITELIST = (
     "Turn-based role-playing video games",
     "Twin-stick shooters",
     # Vidya Game Mechanics
+    "Light gun games",
     "Video games using procedural generation",
     "Video games with time manipulation",
     # Vidya Game Visual Presentation
