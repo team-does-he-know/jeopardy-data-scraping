@@ -76,6 +76,7 @@ Filter the extracted datasets down to a smaller cleaned dataset ready for factoi
 > **IMPORTANT:** This pass was specifically tuned for the Mixture-of-Experts Gemma 4 26B A4B QAT model.
 
 > **TIP:** `./scripts/load-gemma-4.sh` is a quick shortcut script to tell an LM Studio server to load the above model.
+> If you are manually loading your models, then you can take the options from this script for help with configuration.
 
 > **IMPORTANT:** Enable thinking with a reasoning token cap of 1024 tokens. This enables the LLM to generate better quality factoid pairs within a reasonable timeframe.
 
