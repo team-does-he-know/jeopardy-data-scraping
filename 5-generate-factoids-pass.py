@@ -21,6 +21,9 @@ DATABASE_TRANSACTION_BATCH_SIZE = 500
 # Candidate articles dispatched per worker at once.
 WORKER_CHUNK_SIZE = 1
 
+# Maximum seconds to wait before aborting an LLM request.
+REQUEST_TIMEOUT_SECONDS = 60 * 5
+
 # Sampling and penalty parameters for deterministic factoid extraction.
 GENERATION_TEMPERATURE = 0.2  # Keeps drift due to randomness low.
 GENERATION_SEED = 2713179051  # Random seed picked via RNG.
@@ -157,6 +160,7 @@ def request_article_factoids(title, plain_text):
         seed=GENERATION_SEED,
         presence_penalty=GENERATION_PRESENCE_PENALTY,
         frequency_penalty=GENERATION_FREQUENCY_PENALTY,
+        timeout=REQUEST_TIMEOUT_SECONDS,
     )
 
     return parsed_content.get("factoids", [])
@@ -176,7 +180,7 @@ def process_article(article_id):
 
     try:
         raw_factoids = request_article_factoids(title, plain_text)
-    except (URLError, KeyError, ValueError) as error:
+    except (URLError, TimeoutError, KeyError, ValueError) as error:
         print(
             f"Warning: Failed to extract factoids for article {article_id} ({title}): {error}"
         )
