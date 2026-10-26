@@ -65,7 +65,7 @@ Extract page categories and create one-to-many bindings between pages and catego
 
 ### 4. Filter Pages Pass
 
-Filter the extracted datasets down to a smaller cleaned dataset ready for factoid creation.
+Filter the extracted datasets down to a smaller cleaned dataset ready for factoid generation.
 
 ```
 > python3 ./4-filter-pages-pass.py
@@ -73,7 +73,17 @@ Filter the extracted datasets down to a smaller cleaned dataset ready for factoi
 
 ### 5. Generate Factoids Pass
 
-...
+> **IMPORTANT:** This pass was specifically tuned for the Mixture-of-Experts Gemma 4 26B A4B QAT model.
+
+> **TIP:** `./scripts/load-gemma-4.sh` is a quick shortcut script to tell an LM Studio server to load the above model.
+
+> **IMPORTANT:** Enable thinking with a reasoning token cap of 1024 tokens. This enables the LLM to generate better quality factoid pairs within a reasonable timeframe.
+
+Pass filtered Wikipedia pages dataset into an LLM via an OpenAI API-compatible chat completions endpoint.
+
+```
+> python3 ./5-generate-factoids-pass.py
+```
 
 ### 6. Classification Pass
 
