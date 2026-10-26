@@ -20,6 +20,7 @@ def request_chat_completion(
     seed=None,
     presence_penalty=None,
     frequency_penalty=None,
+    timeout=None,
 ):
     """Sends a chat completion request to the local LLM server and returns parsed JSON."""
     payload = {
@@ -55,7 +56,12 @@ def request_chat_completion(
         method="POST",
     )
 
-    with urlopen(request) as response:
+    urlopen_kwargs = {}
+
+    if timeout is not None:
+        urlopen_kwargs["timeout"] = timeout
+
+    with urlopen(request, **urlopen_kwargs) as response:
         response_data = loads(response.read().decode("utf-8"))
 
     raw_content = response_data["choices"][0]["message"]["content"]
