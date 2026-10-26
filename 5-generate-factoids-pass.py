@@ -280,6 +280,26 @@ def execute_factoids_pipeline():
     database_connection.executemany(INSERT_CATEGORY_SQL, surviving_categories)
     database_connection.commit()
 
+    print("Removing duplicate factoids...")
+    database_connection.execute("""
+        DELETE FROM factoids
+        WHERE id NOT IN (
+            SELECT MIN(id)
+            FROM factoids
+            GROUP BY question, answer
+        );
+    """)
+
+    database_connection.execute("""
+        DELETE FROM factoid_categories
+        WHERE NOT EXISTS (
+            SELECT 1 FROM factoids
+            WHERE factoids.id = factoid_categories.factoid_id
+        );
+    """)
+
+    database_connection.commit()
+
     print("Building indexes on factoids database...")
     database_connection.executescript("""
         CREATE INDEX IF NOT EXISTS idx_factoids_article_id
@@ -295,9 +315,13 @@ def execute_factoids_pipeline():
         ON factoid_categories(category_id);
     """)
 
+    final_factoid_count = database_connection.execute(
+        "SELECT COUNT(*) FROM factoids"
+    ).fetchone()[0]
+
     database_connection.close()
     print(
-        f"Done. Total factoids persisted: {total_persisted_factoids:,} "
+        f"Done. Total factoids persisted: {final_factoid_count:,} "
         f"across {len(surviving_categories):,} categories."
     )
 
