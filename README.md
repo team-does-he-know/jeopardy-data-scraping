@@ -59,19 +59,15 @@ Extract page categories and create one-to-many bindings between pages and catego
 > python3 ./2-build-categories-pass.py
 ```
 
-### 3. Build Vital Articles Pass
-
-...
-
-### 4. Filter Pages Pass
+### 3. Filter Pages Pass
 
 Filter the extracted datasets down to a smaller cleaned dataset ready for factoid generation.
 
 ```
-> python3 ./4-filter-pages-pass.py
+> python3 ./3-filter-pages-pass.py
 ```
 
-### 5. Generate Factoids Pass
+### 4. Generate Factoids Pass
 
 > **IMPORTANT:** This pass was specifically tuned for the Mixture-of-Experts Gemma 4 26B A4B QAT model.
 
@@ -83,10 +79,10 @@ Filter the extracted datasets down to a smaller cleaned dataset ready for factoi
 Pass filtered Wikipedia pages dataset into an LLM via an OpenAI API-compatible chat completions endpoint.
 
 ```
-> python3 ./5-generate-factoids-pass.py
+> python3 ./4-generate-factoids-pass.py
 ```
 
-### 6. Classification Pass
+### 5. Classification Pass
 
 ...
 
@@ -150,14 +146,10 @@ Download the categories artifact, decompress it, and cleanup the downloaded arti
 > ./scripts/cleanup-categories-db-artifacts.sh
 ```
 
-### 3. Download Vital Articles Dataset
+### 3. Download Filtered Dataset
 
 ...
 
-### 4. Download Filtered Dataset
-
-...
-
-### 5. Download Factoids Dataset
+### 4. Download Factoids Dataset
 
 ...
