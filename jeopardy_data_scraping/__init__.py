@@ -20,6 +20,7 @@ from jeopardy_data_scraping.openai import request_chat_completion
 from jeopardy_data_scraping.path import (
     ASSETS_DIRECTORY_PATH,
     CATEGORIES_DATABASE_FILEPATH,
+    CLASSIFIED_DATABASE_FILEPATH,
     FACTOIDS_DATABASE_FILEPATH,
     FILTERED_DATABASE_FILEPATH,
     PAGES_DATABASE_FILEPATH,
@@ -30,6 +31,7 @@ from jeopardy_data_scraping.path import (
 __all__ = [
     "ASSETS_DIRECTORY_PATH",
     "CATEGORIES_DATABASE_FILEPATH",
+    "CLASSIFIED_DATABASE_FILEPATH",
     "FACTOIDS_DATABASE_FILEPATH",
     "FILTERED_DATABASE_FILEPATH",
     "PAGES_DATABASE_FILEPATH",
