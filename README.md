@@ -154,8 +154,24 @@ Download the categories artifact, decompress it, and cleanup the downloaded arti
 
 ### 3. Download Filtered Dataset
 
-...
+Download the filter ingested data dataset.
+
+```
+> python3 ./scripts/download-filtered-db.py
+```
 
 ### 4. Download Factoids Dataset
 
-...
+Download the raw generated factoids.
+
+```
+> python3 ./scripts/download-factoids-db.py
+```
+
+### 5. Download Classified Factoids Dataset
+
+Download the classified generated factoids.
+
+```
+> python3 ./scripts/download-classified-db.py
+```
