@@ -76,7 +76,7 @@ Filter the extracted datasets down to a smaller cleaned dataset ready for factoi
 
 > **IMPORTANT:** Enable thinking with a reasoning token cap of 1024 tokens. This enables the LLM to generate better quality factoid pairs within a reasonable timeframe.
 
-Pass filtered Wikipedia pages dataset into an LLM via an OpenAI API-compatible chat completions endpoint.
+Pass filtered Wikipedia pages dataset into an LLM via an OpenAI API-compatible chat completions endpoint for factoid generation.
 
 ```
 > python3 ./4-generate-factoids-pass.py
@@ -84,7 +84,13 @@ Pass filtered Wikipedia pages dataset into an LLM via an OpenAI API-compatible c
 
 ### 5. Classification Pass
 
-...
+> **NOTE:** Follow the alerts in the previous pass.
+
+Pass generated factoids dataset into an LLM via an OpenAI API-compatible chat completions for classification.
+
+```
+> python3 ./5-classification-pass.py
+```
 
 ## Download Generated SQLite3 Datasets
 
